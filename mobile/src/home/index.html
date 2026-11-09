@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#1e2327" />
+    <title>이음오피스</title>
+  </head>
+  <body>
+    <header class="top">
+      <h1>이음오피스</h1>
+      <input id="search" type="search" placeholder="문서 찾기" aria-label="문서 찾기" />
+    </header>
+
+    <main>
+      <section aria-labelledby="new-title">
+        <h2 id="new-title">새로 만들기</h2>
+        <div class="new-grid">
+          <button class="new-card" data-new="markdown" type="button">
+            <span class="badge md">MD</span>
+            <span class="new-name">마크다운 메모</span>
+            <span class="new-desc">제목·목록·표가 있는 글</span>
+          </button>
+          <button class="new-card" data-new="html" type="button">
+            <span class="badge html">HTML</span>
+            <span class="new-name">HTML 페이지</span>
+            <span class="new-desc">웹 페이지, 슬라이드</span>
+          </button>
+          <button class="new-card" data-new="mindmap" type="button">
+            <span class="badge map">MAP</span>
+            <span class="new-name">마인드맵</span>
+            <span class="new-desc">XMind 파일로 저장</span>
+          </button>
+          <button class="new-card import" id="import" type="button">
+            <span class="badge imp">＋</span>
+            <span class="new-name">파일 가져오기</span>
+            <span class="new-desc">.md · .html · .xmind</span>
+          </button>
+        </div>
+        <input
+          id="file"
+          type="file"
+          accept=".md,.markdown,.txt,.html,.htm,.xmind"
+          multiple
+          hidden
+        />
+      </section>
+
+      <section aria-labelledby="list-title">
+        <h2 id="list-title">내 문서</h2>
+        <ul id="list" class="doc-list"></ul>
+        <p id="empty" class="empty" hidden>
+          아직 문서가 없습니다. 위에서 새로 만들거나 파일을 가져오세요.
+        </p>
+      </section>
+
+      <p class="note">워드·엑셀·파워포인트·PDF 편집기와 AI 기능은 다음 단계에서 추가됩니다.</p>
+    </main>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

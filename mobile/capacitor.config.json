@@ -1,0 +1,10 @@
+{
+  "appId": "io.github.ieumoffice.mobile",
+  "appName": "이음오피스",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": true
+  }
+}

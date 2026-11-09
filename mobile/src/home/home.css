@@ -1,0 +1,286 @@
+:root {
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #1e2327;
+  --muted: #66707a;
+  --line: #e2e5e9;
+  --accent: #2f6fde;
+  --danger: #c62828;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15181b;
+    --card: #1f2327;
+    --text: #e8eaed;
+    --muted: #9aa3ab;
+    --line: #30363c;
+    --accent: #79a6ff;
+    --danger: #ff8a80;
+    color-scheme: dark;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font:
+    16px/1.45 system-ui,
+    'Noto Sans KR',
+    'Apple SD Gothic Neo',
+    sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: max(16px, env(safe-area-inset-top)) 32px 16px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+
+.top h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+#search {
+  flex: 1;
+  max-width: 480px;
+  margin-left: auto;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--text);
+  font: inherit;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 8px 32px 48px;
+}
+
+h2 {
+  margin: 28px 0 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.new-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.new-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 14px;
+  align-items: center;
+  min-height: 84px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--text);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.new-card .badge {
+  grid-row: span 2;
+}
+
+.new-card:active,
+.doc-open:active {
+  background: color-mix(in srgb, var(--accent) 10%, var(--card));
+}
+
+.new-name {
+  font-weight: 600;
+}
+
+.new-desc {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.badge {
+  display: inline-grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  color: #fff;
+  font:
+    700 12px/1 system-ui,
+    sans-serif;
+  letter-spacing: 0.02em;
+  flex: none;
+}
+
+.badge.md {
+  background: #3a7d44;
+}
+.badge.html {
+  background: #d35400;
+}
+.badge.map {
+  background: #8e44ad;
+}
+.badge.imp {
+  background: var(--accent);
+  font-size: 24px;
+}
+
+.doc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  overflow: hidden;
+}
+
+.doc-list:empty {
+  display: none;
+}
+
+.doc {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--line);
+}
+
+.doc:first-child {
+  border-top: 0;
+}
+
+.doc-open {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  min-height: 68px;
+  padding: 10px 16px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.doc-open .badge {
+  width: 40px;
+  height: 40px;
+  font-size: 11px;
+}
+
+.doc-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.doc-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+.doc-meta {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.doc-more {
+  width: 56px;
+  min-height: 68px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.menu {
+  position: fixed;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  min-width: 220px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+}
+
+.menu button {
+  min-height: 46px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  font: inherit;
+}
+
+.menu button.danger {
+  color: var(--danger);
+}
+
+.menu button:active {
+  background: var(--bg);
+}
+
+.empty,
+.note {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.note {
+  margin-top: 36px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .top,
+  main {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .top {
+    flex-wrap: wrap;
+  }
+  #search {
+    max-width: none;
+    flex-basis: 100%;
+  }
+}

@@ -27,6 +27,8 @@ export default tseslint.config(
       'packages/html2docx/src/browser/**',
       // rhwp-studio build output (apps/hwp/scripts/build-studio.mjs), git-ignored
       'apps/hwp/public/**',
+      // the Android tablet app (Capacitor project, generated Gradle files, built web assets)
+      'mobile/**',
     ],
   },
   js.configs.recommended,

@@ -1,0 +1,23 @@
+{
+  "name": "ieumoffice-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "description": "IeumOffice for Android tablets (Capacitor wrapper around the desktop editors)",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "sync": "npm run build && npx cap sync android",
+    "serve": "node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.0",
+    "@capacitor/app": "^7.0.1",
+    "@capacitor/core": "^7.4.0",
+    "@capacitor/filesystem": "^7.1.2",
+    "@capacitor/share": "^7.0.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.0"
+  }
+}
