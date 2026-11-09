@@ -1,0 +1,84 @@
+name: Android APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'mobile/**'
+      - 'apps/markdown/**'
+      - 'apps/html/**'
+      - 'apps/mindmap/**'
+      - 'packages/**'
+      - '.github/workflows/android-apk.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: android-apk
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Install editor dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Install mobile dependencies
+        working-directory: mobile
+        run: npm ci --no-audit --no-fund
+
+      - name: Build web part
+        working-directory: mobile
+        run: npm run build
+
+      - name: Copy into the Android project
+        working-directory: mobile
+        run: npx cap sync android
+
+      - name: Build APK
+        working-directory: mobile/android
+        env:
+          APP_VERSION_CODE: ${{ github.run_number }}
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+          cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/IeumOffice-Android.apk"
+
+      - name: Keep the APK with this run
+        uses: actions/upload-artifact@v4
+        with:
+          name: IeumOffice-Android
+          path: IeumOffice-Android.apk
+
+      - name: Publish on the android-latest release
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          NOTES="태블릿용 이음오피스 시험판 (빌드 #${{ github.run_number }}, ${GITHUB_SHA::7}). 태블릿 브라우저에서 아래 IeumOffice-Android.apk 를 눌러 내려받아 설치하세요."
+          if gh release view android-latest >/dev/null 2>&1; then
+            gh release upload android-latest IeumOffice-Android.apk --clobber
+            gh release edit android-latest --notes "$NOTES"
+          else
+            gh release create android-latest IeumOffice-Android.apk \
+              --prerelease --title "이음오피스 안드로이드 (최신 시험판)" --notes "$NOTES"
+          fi
